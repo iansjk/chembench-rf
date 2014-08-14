@@ -22,7 +22,28 @@
 suppressPackageStartupMessages(library(optparse))
 suppressPackageStartupMessages(library(randomForest))
 source("ReadXFile.R")
+source("ReadActivityFile.R")
 
-train <- ReadXFile("train.x")
-test <- ReadXFile("ext.x")
+# TODO make these cmdline parameters later using optparse
+trainingSetName <- "train_0"
+testSetName <- "ext_0"
+type <- "regression"
+
+# though data splits are useful for other modeling types, for randomForest we
+# rely on the internal out-of-bag predictions for determining model usefulness
+# rather than testing our model against the external set. therefore we should
+# use the entire dataset (by merging together the training and test sets)
+# rather than only using the training set.
+train <- ReadXFile(paste0(trainingSetName, ".x"))
+test <- ReadXFile(paste0(testSetName, ".x"))
+dataset <- rbind(train, test)
+
+trainActivity <- ReadActivityFile(paste0(trainingSetName, ".a"))
+testActivity <- ReadActivityFile(paste0(testSetName, ".a"))
+activities <- rbind(trainActivity, testActivity)
+
+# convert activities to factors if performing classification
+if (type == "classification") {
+    activities$Activity <- as.factor(activities$Activity)
+}
 
