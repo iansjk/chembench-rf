@@ -27,11 +27,11 @@ ReadActivityFile <- function(input) {
                             stringsAsFactors = FALSE)
 
     colNames <- c("Compound", "Activity")
-    linesToSkip = 0
+    linesToSkip <- 0
     if (is.character(firstLine[1, 2])) {
         # if header is present, prefer the column names of the header
         colNames <- firstLine[1, ]
-        linesToSkip = 1
+        linesToSkip <- 1
     }
 
     dataFrame <- read.table(input, skip = linesToSkip,
