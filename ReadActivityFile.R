@@ -20,9 +20,8 @@
 ReadActivityFile <- function(input) {
     # activity files can have headers, but don't have to; if the header is
     # absent, then the columns "Compound", "Activity" are assumed.
-    # header can be determined by checking the second column of the first line.
-    # if present, there will be a string there; if not, there should be a
-    # number.
+    # check the first row, second column to see if a header is present: if it
+    # is, it will be a character scalar, and if not, it should be numeric.
     firstLine <- read.table(input, nrows = 1, header = FALSE,
                             stringsAsFactors = FALSE)
 
