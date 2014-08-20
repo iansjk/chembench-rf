@@ -19,10 +19,12 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
+argv <- commandArgs(trailingOnly = FALSE)
+kScriptDir <- dirname(sub("--file=", "", argv[grep("--file=", argv)]))
 suppressPackageStartupMessages(library(optparse))
 suppressPackageStartupMessages(library(randomForest))
-source("ReadXFile.R")
-source("ReadActivityFile.R")
+source(paste(kScriptDir, "ReadXFile.R", sep = "/"))
+source(paste(kScriptDir, "ReadActivityFile.R", sep = "/"))
 
 # TODO make these cmdline parameters later using optparse
 trainingSetName <- "train_0"
