@@ -21,6 +21,9 @@
 # SOFTWARE.
 argv <- commandArgs(trailingOnly = FALSE)
 kScriptDir <- dirname(sub("--file=", "", argv[grep("--file=", argv)]))
+if (length(kScriptDir) == 0 || nchar(kScriptDir) == 0) {
+    kScriptDir <- "."  # e.g. when sourced in interactive shell
+}
 suppressPackageStartupMessages(library(optparse))
 suppressPackageStartupMessages(library(randomForest))
 source(paste(kScriptDir, "ReadXFile.R", sep = "/"))
