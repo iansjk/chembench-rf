@@ -1,3 +1,12 @@
+# vim swap files
 *.sw[o-p]
+
+# data
 *.x
+*.a
+*.act
+
+# output
+*.rds
+*.csv
 
