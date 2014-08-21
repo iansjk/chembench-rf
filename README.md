@@ -8,5 +8,5 @@ The `RFModel.R` script creates a Random Forest model from a dataset file (a
 
 The scripts require the R packages `randomForest` and `optparse`. In addition,
 the helper scripts `ReadActivityFile.R` and `ReadXFile.R` must be placed in the
-same directory as the `RFModel.R` executable scripts.
+same directory as the `RFModel.R` executable script.
 
