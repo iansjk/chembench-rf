@@ -30,25 +30,15 @@ source(paste(kScriptDir, "ReadXFile.R", sep = "/"))
 source(paste(kScriptDir, "ReadActivityFile.R", sep = "/"))
 
 # TODO make these cmdline parameters later using optparse
-trainingSetName <- "train_0"
-testSetName <- "ext_0"
+datasetFile <- "rfds.x"
+activityFile <- "rfds.act"
 type <- "regression"
 
-# though data splits are useful for other modeling types, for randomForest we
-# rely on the internal out-of-bag predictions for determining model usefulness
-# rather than testing our model against the external set. therefore we should
-# use the entire dataset for model-building, rather than only using the
-# training set.
-train <- ReadXFile(paste0(trainingSetName, ".x"))
-test <- ReadXFile(paste0(testSetName, ".x"))
-dataset <- rbind(train, test)
-
-trainActivity <- ReadActivityFile(paste0(trainingSetName, ".a"))
-testActivity <- ReadActivityFile(paste0(testSetName, ".a"))
-activities <- c(trainActivity, testActivity)
+dataset <- ReadXFile(datasetFile)
+activity <- ReadActivityFile(activityFile)
 
 # convert activities to factors if performing classification
 if (type == "classification") {
-    activities <- as.factor(activities)
+    activity <- as.factor(activity)
 }
 
