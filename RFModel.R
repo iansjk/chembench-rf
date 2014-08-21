@@ -37,8 +37,8 @@ type <- "regression"
 # though data splits are useful for other modeling types, for randomForest we
 # rely on the internal out-of-bag predictions for determining model usefulness
 # rather than testing our model against the external set. therefore we should
-# use the entire dataset (by merging together the training and test sets)
-# rather than only using the training set.
+# use the entire dataset for model-building, rather than only using the
+# training set.
 train <- ReadXFile(paste0(trainingSetName, ".x"))
 test <- ReadXFile(paste0(testSetName, ".x"))
 dataset <- rbind(train, test)
