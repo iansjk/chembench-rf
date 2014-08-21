@@ -45,10 +45,10 @@ dataset <- rbind(train, test)
 
 trainActivity <- ReadActivityFile(paste0(trainingSetName, ".a"))
 testActivity <- ReadActivityFile(paste0(testSetName, ".a"))
-activities <- rbind(trainActivity, testActivity)
+activities <- c(trainActivity, testActivity)
 
 # convert activities to factors if performing classification
 if (type == "classification") {
-    activities$Activity <- as.factor(activities$Activity)
+    activities <- as.factor(activities)
 }
 

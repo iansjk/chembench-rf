@@ -32,9 +32,9 @@ ReadActivityFile <- function(input) {
     # use the first column (the compound names) as the row labels
     dataFrame <- read.table(input, skip = linesToSkip, row.names = 1,
                             colClasses = c("character", "numeric"))
-    # manually add the column label "Activity" for the second column
-    names(dataFrame) <- "Activity"
-
-    return(dataFrame)
+    # return a named vector of the activities
+    vector <- dataFrame[, 1]
+    names(vector) <- row.names(dataFrame)
+    return(vector)
 }
 
