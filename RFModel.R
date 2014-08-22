@@ -33,6 +33,9 @@ source(paste(kScriptDir, "ReadActivityFile.R", sep = "/"))
 datasetFile <- "rfds.x"
 activityFile <- "rfds.act"
 type <- "regression"
+ntree <- 1000
+rfObjectFileName <- "forest.rds"
+oobFileName <- "oobpreds.csv"
 
 dataset <- ReadXFile(datasetFile)
 activity <- ReadActivityFile(activityFile)
@@ -41,4 +44,20 @@ activity <- ReadActivityFile(activityFile)
 if (type == "classification") {
     activity <- as.factor(activity)
 }
+
+# subset activity vector to contain only compounds that are in the dataset
+# (normally the same compounds are in both, i.e. there is no compound that is
+# in only one of the two sets. but if descriptor generation fails, then a
+# compound could be given in the activity vector but not in the dataset)
+activity <- activity[row.names(dataset)]
+
+# generate forest and save it as an RDS file
+rf <- randomForest(dataset, y = activity, ntree = ntree)
+stopifnot(rf$type == type)  # assert that rf type is what we expected
+saveRDS(rf, rfObjectFileName)
+
+# save out-of-bag (oob) predictions
+oob <- predict(rf)  # absence of "newData" parameter generates oob data
+write.table(oob, file = oobFileName, quote = FALSE, sep = "\t",
+            col.names = FALSE)
 
