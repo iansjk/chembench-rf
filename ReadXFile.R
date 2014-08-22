@@ -35,11 +35,9 @@ ReadXFile <- function(input) {
     # column 2 of dataFrame contains the row labels.
     # adjust dataFrame so it contains the right row labels and column names.
     compoundNames <- as.character(dataFrame[, 2])
+    dataFrame <- subset(dataFrame, select = -c(1, 2))  # drop first two cols
     row.names(dataFrame) <- compoundNames
     names(dataFrame) <- descriptorNames
-
-    # now drop the first two columns from dataFrame
-    dataFrame <- subset(dataFrame, select = -c(1, 2))
 
     # check that the first line of the X file accurately represents the number
     # of rows and columns
